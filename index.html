@@ -3,118 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini VN</title>
+    <title>My RPG</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div id="global-bg"></div>
-<div id="main-menu">
-    <div id="menu-buttons">
-        <button id="start-game">Start</button>
-        <button id="continue-game">Continue</button>
-        <button id="settings">Settings</button>
-        <button id="credits">Credits</button>
-        <button id="exit">Exit</button>
+
+    <!-- TITLE SCREEN -->
+    <div id="title-screen" class="screen">
+        <h1>MY RPG</h1>
+
+        <div class="title-buttons">
+            <button id="new-game-btn">New Game</button>
+            <button id="load-game-btn">Load Game</button>
+        </div>
+
+        <p id="title-message"></p>
     </div>
-</div>
 
-<div id="gameplay" style="display:none;">
-    <div id="background"></div>
-    <div id="character"></div>
 
-    <div id="ui">
-        <div id="name-box"></div>
-        <div id="dialogue-box">
-            <p id="dialogue-text"></p>
-            <div id="choices"></div>
-        </div>
-        
-        <div id="quick-access-bar">
-            <button id="auto-toggle">Auto-Advance: OFF</button>
-            <button id="skip-toggle">Skip: OFF</button>  <button id="backlog-button">History</button>
-            <button id="quick-menu-button">Menu</button>
-        </div>
+    <!-- GAME SCREEN -->
+    <div id="game-screen" class="screen hidden">
+
+        <header>
+            <h1>My RPG</h1>
+
+            <button id="menu-btn">Menu</button>
+        </header>
+
+        <main>
+
+            <section id="game-world">
+                <h2 id="location-name">Village</h2>
+
+                <div id="map">
+                    <div id="player">@</div>
+                </div>
+
+                <p>Use the arrow keys to move.</p>
+            </section>
+
+
+            <aside id="stats">
+                <h2>Character</h2>
+
+                <p>
+                    <strong>Name:</strong>
+                    <span id="player-name"></span>
+                </p>
+
+                <p>
+                    <strong>Level:</strong>
+                    <span id="player-level"></span>
+                </p>
+
+                <p>
+                    <strong>HP:</strong>
+                    <span id="player-hp"></span> /
+                    <span id="player-max-hp"></span>
+                </p>
+
+                <p>
+                    <strong>MP:</strong>
+                    <span id="player-mp"></span> /
+                    <span id="player-max-mp"></span>
+                </p>
+
+                <p>
+                    <strong>Gold:</strong>
+                    <span id="player-gold"></span>
+                </p>
+            </aside>
+
+        </main>
     </div>
-</div>
 
-<div id="ending" style="display:none;">
-    <div class="ending-badge">🎉 Ending Reached</div>
-    <h2>Your Journey Ends Here</h2>
-    <p id="ending-text"></p>
-    <button id="return-menu">Return to Menu</button>
-</div>
 
-<div id="quick-menu" class="overlay-menu" style="display:none;">
-    <div class="submenu-container">
-        <h2>Quick Menu</h2>
-        <div class="submenu-buttons menu-vertical">
-            <button id="quick-save">Quick Save</button>
-            <button id="quick-load">Quick Load</button>
-            <button id="menu-settings-btn">Settings</button>
-            <button id="return-to-title">Return to Title</button>
+    <!-- GAME MENU -->
+    <div id="game-menu" class="modal hidden">
+
+        <div class="menu-box">
+
+            <h2>Menu</h2>
+
+            <button id="save-btn">Save Game</button>
+            <button id="close-menu-btn">Return to Game</button>
+            <button id="title-btn">Quit to Title</button>
+
+            <p id="menu-message"></p>
+
         </div>
-        <button id="close-quick-menu" class="back-btn">Close</button>
+
     </div>
-</div>
 
-<div id="backlog-menu" class="overlay-menu" style="display:none;">
-    <div class="submenu-container">
-        <h2>Dialogue History</h2>
-        <div id="backlog-content" class="history-content">
-            </div>
-        <button id="close-backlog-menu" class="back-btn">Close</button>
-    </div>
-</div>
 
-<div id="settings-menu" class="overlay-menu" style="display:none;">
-    <div class="submenu-container">
-        <h2>Settings</h2>
-        
-        <div class="settings-group">
-            <h3>Text Speed</h3>
-            <input type="range" min="10" max="50" value="28" class="slider" id="text-speed-slider">
-            <span id="text-speed-value">28</span> ms delay
-        </div>
-        
-        <div class="settings-group">
-            <h3>BGM Volume</h3>
-            <input type="range" min="0" max="1" step="0.01" value="1.0" class="slider" id="bgm-volume-slider">
-            <span id="bgm-volume-value">100</span>%
-        </div>
-        
-        <div class="submenu-buttons">
-            <button id="back-from-settings">Back to Menu</button>
-        </div>
-    </div>
-</div>
-
-<div id="credits-menu" style="display:none;">
-    <div class="submenu-container">
-        <h2>Credits</h2>
-        <div class="credits-content">
-            <p><strong>Game Engine</strong><br>Original VNJS Engine<br>(Visual Novel JavaScript)</p>
-            <p><strong>Story & Code</strong><br>lleslieeee</p>
-            <p><strong>Special Thanks</strong><br>You, for playing!</p>
-        </div>
-        <div class="submenu-buttons">
-            <button id="back-from-credits">Back to Menu</button>
-        </div>
-    </div>
-</div>
-
-<div id="custom-popup" style="display:none;">
-    <div class="popup-overlay">
-        <div class="popup-content">
-            <h3>Reset Progress?</h3>
-            <p>You have existing progress. Starting a new game will reset your save. Continue?</p>
-            <div class="popup-buttons">
-                <button id="popup-reset" class="popup-btn reset-btn">Reset</button>
-                <button id="popup-cancel" class="popup-btn cancel-btn">Go Back</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="engine.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>
