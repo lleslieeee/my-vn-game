@@ -1,536 +1,141 @@
-/* === GLOBAL BACKGROUND (always visible behind everything) === */
-#global-bg {
-    position: fixed;
-    inset: 0;
-    background: #999;
-    z-index: -10;
-}
-/* === MAIN MENU STYLES === */
-#main-menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-#menu-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-#menu-buttons button {
-    width: 200px;
-    padding: 12px 20px;
-    font-size: 18px;
-    border: 2px solid #444;
-    background: #eee;
-    color: #222;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-#menu-buttons button:hover {
-    background: #ddd;
-    transform: translateY(-2px);
+* {
+    box-sizing: border-box;
 }
 
-/* * === SETTINGS & CREDITS MENUS (UPDATED TO INCLUDE NEW OVERLAY CLASS) === 
- * Note: The existing #settings-menu and #credits-menu selectors are combined 
- * with the new .overlay-menu class for shared properties.
-*/
-.overlay-menu, #settings-menu, #credits-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.9); /* Slightly darker for better focus on overlays */
-    z-index: 900;
+body {
+    margin: 0;
+    background: #111;
+    color: white;
+    font-family: Arial, sans-serif;
 }
-.submenu-container {
-    background: #fff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    max-width: 500px;
-    width: 90%;
-    text-align: center;
-}
-.submenu-container h2 {
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 2rem;
-}
-.submenu-container p {
-    margin-bottom: 20px;
-    color: #666;
-    line-height: 1.6;
-}
-.credits-content {
-    text-align: left;
-    margin-bottom: 25px;
-}
-.credits-content p {
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
-}
-.credits-content strong {
-    color: #333;
+
+button {
     display: block;
-    margin-bottom: 5px;
-}
-.submenu-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+    width: 220px;
+    margin: 10px auto;
+    padding: 12px;
+
+    background: #333;
+    color: white;
+
+    border: 1px solid #777;
+    cursor: pointer;
+
+    font-size: 16px;
 }
 
-.menu-vertical {
-    flex-direction: column;
-    gap: 10px;
-    margin: 15px auto;
-    max-width: 250px;
+button:hover {
+    background: #555;
 }
-.submenu-buttons button {
-    padding: 12px 25px;
-    font-size: 16px;
-    border: 2px solid #444;
-    background: #eee;
-    color: #222;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
+
+.screen {
+    min-height: 100vh;
+    padding: 40px;
 }
-.submenu-buttons button:hover {
-    background: #ddd;
-    transform: translateY(-2px);
+
+.hidden {
+    display: none !important;
 }
-/* === GAMEPLAY VISUAL STYLES === */
-#background {
+
+
+/* TITLE */
+
+#title-screen {
+    text-align: center;
+    padding-top: 20vh;
+}
+
+#title-screen h1 {
+    font-size: 64px;
+}
+
+
+/* GAME */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+header button {
+    width: 100px;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+#game-world {
+    flex: 1;
+}
+
+#stats {
+    width: 250px;
+
+    padding: 20px;
+
+    background: #222;
+    border: 1px solid #444;
+}
+
+
+/* MAP */
+
+#map {
+    position: relative;
+
+    width: 500px;
+    height: 350px;
+
+    background: #263c25;
+    border: 3px solid #777;
+
+    margin-top: 20px;
+}
+
+#player {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-}
-#character {
-    position: absolute;
-    bottom: 0;
+
     left: 50%;
-    transform: translateX(-50%);
-    height: 80%;
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-/* === GAMEPLAY UI STYLES === */
-#ui {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 0;
-    gap: 5px;
-    font-family: 'Verdana', sans-serif;
-}
-#name-box {
-    align-self: flex-start;
-    margin-left: 20px;
-    padding: 5px 10px;
-    background: rgba(0, 0, 0, 0.7);
-    color: #fff;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 28px;
     font-weight: bold;
-    font-size: 1.1rem;
-    border-radius: 5px 5px 0 0;
-}
-#dialogue-box {
-    width: 90%;
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    padding: 15px;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    font-size: 1rem;
-    line-height: 1.4em;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-/* Dialogue text */
-#dialogue-text {
-    margin: 0;
-}
-/* Choices */
-#choices {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 5px;
-}
-#choices button {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-radius: 5px;
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: 0.2s;
-}
-#choices button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255,255,255,0.6);
+
+    color: yellow;
 }
 
-/* === POINTER EVENTS MANAGEMENT === */
-#choices, #choices button {
-    pointer-events: auto;
-}
-#dialogue-box {
-    pointer-events: none;
-}
-#dialogue-box > * {
-    pointer-events: auto;
-}
-/* === CUSTOM POPUP STYLES === */
-#custom-popup {
+
+/* MENU */
+
+.modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-}
-.popup-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+
+    inset: 0;
+
     background: rgba(0, 0, 0, 0.7);
+
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
-.popup-content {
-    background: #fff;
+
+.menu-box {
+    width: 350px;
+
     padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    max-width: 400px;
-    width: 90%;
+
+    background: #222;
+    border: 2px solid #777;
+
     text-align: center;
-}
-.popup-content h3 {
-    margin-bottom: 15px;
-    color: #333;
-    font-size: 1.5rem;
-}
-.popup-content p {
-    margin-bottom: 25px;
-    color: #666;
-    line-height: 1.5;
-}
-.popup-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
-.popup-btn {
-    padding: 12px 25px;
-    font-size: 16px;
-    border: 2px solid;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
-    min-width: 100px;
-}
-.reset-btn {
-    background: #ff4444;
-    color: white;
-    border-color: #cc0000;
-}
-.reset-btn:hover {
-    background: #cc0000;
-    transform: translateY(-2px);
-}
-.cancel-btn {
-    background: #eee;
-    color: #222;
-    border-color: #444;
-}
-.cancel-btn:hover {
-    background: #ddd;
-    transform: translateY(-2px);
-}
-/* === ENDING PAGE STYLES === */
-#ending {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    text-align: center;
-    padding: 40px 20px;
-}
-#ending h2 {
-    font-size: 3rem;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    animation: fadeInUp 0.8s ease-out;
-}
-#ending-text {
-    font-size: 1.3rem;
-    line-height: 1.6;
-    max-width: 600px;
-    margin-bottom: 40px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-    animation: fadeInUp 0.8s ease-out 0.2s both;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 25px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-#return-menu {
-    padding: 15px 35px;
-    font-size: 1.2rem;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    animation: fadeInUp 0.8s ease-out 0.4s both;
-}
-#return-menu:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.6);
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-/* Animation for ending elements */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.ending-badge {
-    position: absolute;
-    bottom: 90px;
-    right: 50px;
-    background: rgba(255, 255, 255, 0.25);
-    padding: 12px 20px;
-    border-radius: 25px;
-    font-size: 0.95rem;
-    backdrop-filter: blur(15px);
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    color: white;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    z-index: 10;
-    max-width: 200px;
-    text-align: center;
-    white-space: nowrap;
-    transform-origin: bottom center;
-}
-
-@keyframes marioPipeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(100%) scaleY(0.1) scaleX(0.8);
-    }
-    40% {
-        opacity: 1;
-        transform: translateY(-20px) scaleY(1.1) scaleX(1.05);
-    }
-    70% {
-        transform: translateY(10px) scaleY(0.95) scaleX(1.02);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scaleY(1) scaleX(1);
-    }
-}
-
-@keyframes marioPipeOut {
-    0% {
-        opacity: 1;
-        transform: translateY(0) scaleY(1) scaleX(1);
-    }
-    30% {
-        opacity: 0.8;
-        transform: translateY(-15px) scaleY(1.05) scaleX(1.02);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(100%) scaleY(0.1) scaleX(0.8);
-    }
-}
-
-@media (max-width: 480px) {
-    .ending-badge {
-        bottom: 20px;
-        right: 20px;
-        left: 20px;
-        max-width: none;
-        margin: 0 auto;
-        transform-origin: bottom center;
-    }
-}
-
-/* * ======================================================
- * 🆕 NEW UI/UX FEATURES STYLES
- * ======================================================
- */
-
-/* === QUICK ACCESS BAR STYLES (UNIFIED) === */
-#quick-access-bar {
-    display: flex;
-    gap: 10px;
-    margin-top: 5px;
-    z-index: 50; 
-}
-/* Apply unified styling to ALL buttons in the Quick Access Bar */
-#quick-access-bar button {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: 0.2s;
-    /* Ensure no unique margins/paddings interfere with flex alignment */
-    margin: 0;
-}
-#quick-access-bar button:hover {
-    background: rgba(255,255,255,0.2);
-    border-color: rgba(255,255,255,0.6);
-}
-
-/* 🎯 SPECIFIC STYLE: Ensure Auto-toggle has enough room for its text */
-#auto-toggle {
-    min-width: 120px; 
-}
-
-/* 🆕 NEW: Styling for when Skip is active */
-#skip-toggle.active {
-    background: rgba(255, 255, 255, 0.4);
-    border-color: rgba(255, 255, 255, 0.8);
-    font-weight: bold;
-}
-
-/* === CHOICE RE-VISITATION STYLING === */
-#choices button.visited-choice {
-    background: rgba(150, 150, 150, 0.2); /* Subdued background */
-    color: #ccc; /* Subdued text color */
-    border-color: rgba(150, 150, 150, 0.4);
-    font-style: italic;
-    box-shadow: none; /* Remove hover shadow on visited */
-}
-#choices button.visited-choice:hover {
-    background: rgba(150, 150, 150, 0.3); /* Slight change on hover */
-    border-color: rgba(150, 150, 150, 0.6);
-    transform: none; /* Prevent movement on hover */
-}
-
-/* === BACKLOG CONTENT STYLES === */
-#backlog-menu .submenu-container {
-    max-width: 700px;
-    width: 90%;
-}
-.history-content {
-    max-height: 55vh;
-    overflow-y: auto;
-    padding: 15px;
-    margin-bottom: 20px;
-    background: #f5f5f5;
-    border-radius: 5px;
-    text-align: left;
-    color: #333;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
-}
-.backlog-entry {
-    padding: 8px 0;
-    margin-bottom: 5px;
-    border-bottom: 1px dashed #ddd;
-    line-height: 1.6;
-}
-.backlog-entry:last-child {
-    border-bottom: none;
-}
-.backlog-entry strong {
-    color: #444;
-    font-weight: bold;
-    display: inline-block;
-    margin-right: 5px;
-}
-
-/* === SETTINGS SLIDER STYLES === */
-.settings-group {
-    margin-bottom: 20px;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    text-align: center;
-}
-.settings-group h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-    color: #555;
-}
-.settings-group span {
-    font-weight: bold;
-    color: #444;
-    display: inline-block;
-    min-width: 30px;
-    text-align: right;
-    margin-left: 5px;
-}
-/* Basic Slider Styling (Native element, requires minimal styling) */
-input[type=range] {
-    width: 70%;
-    margin: 5px 0;
-    cursor: pointer;
-    -webkit-appearance: none;
-    appearance: none;
-    background: #ddd;
-    height: 6px;
-    border-radius: 3px;
-}
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: #444;
-    cursor: pointer;
-}
-input[type=range]::-moz-range-thumb {
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: #444;
-    cursor: pointer;
-    border: none;
 }
