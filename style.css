@@ -1,80 +1,398 @@
+/* ==========================================
+   GLOBAL
+   ========================================== */
+
 * {
     box-sizing: border-box;
 }
 
+
+html,
 body {
     margin: 0;
+
+    width: 100%;
+
+    min-height: 100%;
+
+    overflow-x: hidden;
+}
+
+
+body {
     background: #111;
+
     color: white;
+
     font-family: Arial, sans-serif;
 }
 
+
 button {
     display: block;
+
     width: 220px;
+
     margin: 10px auto;
+
     padding: 12px;
 
     background: #333;
+
     color: white;
 
     border: 1px solid #777;
+
     cursor: pointer;
 
     font-size: 16px;
 }
 
+
 button:hover {
     background: #555;
 }
 
-.screen {
-    min-height: 100vh;
-    padding: 40px;
+
+button:disabled {
+    cursor: default;
 }
+
+
+input {
+    box-sizing: border-box;
+
+    background: #111;
+
+    color: white;
+
+    border: 1px solid #555;
+
+    padding: 6px;
+
+    font-family: Arial, sans-serif;
+}
+
 
 .hidden {
     display: none !important;
 }
 
 
-/* TITLE */
+/* ==========================================
+   SCREENS
+   ========================================== */
+
+.screen {
+    min-height: 100vh;
+
+    padding: 40px;
+
+    overflow-x: hidden;
+}
+
 
 #title-screen {
     text-align: center;
+
     padding-top: 20vh;
 }
 
+
 #title-screen h1 {
     font-size: 64px;
+
+    margin-bottom: 40px;
 }
 
 
-/* GAME */
+/* ==========================================
+   GAME HEADER
+   ========================================== */
 
 header {
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     border-bottom: 1px solid #444;
+
     padding-bottom: 10px;
 }
 
+
 header button {
     width: 100px;
+
     margin: 0;
 }
 
+
+/* ==========================================
+   GAME LAYOUT
+   ========================================== */
+
 main {
     display: flex;
+
     gap: 30px;
+
     margin-top: 30px;
+
+    align-items: flex-start;
+
+    min-width: 0;
 }
 
+
 #game-world {
-    flex: 1;
+    flex: 1 1 auto;
+
+    min-width: 500px;
 }
+
+
+/* ==========================================
+   MAP VIEWPORT
+   ========================================== */
+
+#map {
+    position: relative;
+
+    width: 500px;
+
+    height: 350px;
+
+    /*
+        The map is the camera viewport.
+
+        JavaScript treats the usable viewport
+        as exactly 500 x 350 pixels.
+    */
+    box-sizing: content-box;
+
+    background: #263c25;
+
+    border: 3px solid #777;
+
+    margin-top: 20px;
+
+    overflow: hidden;
+}
+
+
+/* ==========================================
+   MAP ATLAS
+   ========================================== */
+
+#map-atlas {
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+
+    width: 2500px;
+
+    height: 1750px;
+
+    background: #263c25;
+
+    transform: translate3d(0, 0, 0);
+
+    will-change: transform;
+}
+
+
+/* ==========================================
+   COLLISION EDITOR OVERLAY
+   ========================================== */
+
+#collision-editor-layer {
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 10;
+}
+
+
+.collision-editor-rectangle {
+    position: absolute;
+
+    background: rgba(255, 0, 0, 0.18);
+
+    border: 1px solid rgba(255, 80, 80, 0.9);
+
+    pointer-events: none;
+}
+
+
+.collision-editor-rectangle.selected {
+    background: rgba(255, 180, 0, 0.28);
+
+    border-color: #ffd700;
+
+    border-width: 2px;
+}
+
+
+.collision-editor-drawing {
+    position: absolute;
+
+    background: rgba(255, 255, 0, 0.18);
+
+    border: 1px dashed #ffd700;
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   PLAYER
+   ========================================== */
+
+#player {
+    position: absolute;
+
+    width: 64px;
+
+    height: 32px;
+
+    background: #ffd700;
+
+    border: 2px solid white;
+
+    /*
+        The player's world position represents
+        the center of the feet at the bottom
+        of the sprite.
+
+        This lets the visible sprite overlap
+        scenery without changing its collision
+        footprint.
+    */
+    transform: translate(-50%, -100%);
+
+    pointer-events: none;
+
+    z-index: 20;
+}
+
+
+/* ==========================================
+   INVENTORY
+   ========================================== */
+
+#inventory-panel {
+    width: 500px;
+
+    margin-top: 12px;
+
+    padding: 10px;
+
+    background: #1a1a1a;
+
+    border: 1px solid #444;
+
+    border-radius: 6px;
+}
+
+
+#inventory-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+}
+
+
+#inventory-header h2 {
+    margin: 0;
+
+    font-size: 16px;
+}
+
+
+.inventory-hint {
+    padding: 2px 7px;
+
+    border: 1px solid #555;
+
+    border-radius: 4px;
+
+    font-size: 12px;
+
+    color: #aaa;
+}
+
+
+#inventory-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(9, 1fr);
+
+    grid-template-rows:
+        repeat(3, 1fr);
+
+    gap: 4px;
+}
+
+
+.inventory-slot {
+    width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #242424;
+
+    border: 1px solid #444;
+
+    border-radius: 3px;
+
+    font-size: 24px;
+
+    cursor: default;
+
+    user-select: none;
+}
+
+
+.inventory-slot:hover {
+    border-color: #888;
+
+    background: #303030;
+}
+
+
+.inventory-slot.empty {
+    color: #555;
+}
+
+
+/* ==========================================
+   CHARACTER PANEL
+   ========================================== */
 
 #stats {
     width: 250px;
@@ -82,40 +400,487 @@ main {
     padding: 20px;
 
     background: #222;
+
     border: 1px solid #444;
+
+    flex-shrink: 0;
 }
 
 
-/* MAP */
+/* ==========================================
+   DEV TOOLBOX
+   ========================================== */
 
-#map {
-    position: relative;
+#dev-tools {
+    width: 320px;
 
-    width: 500px;
-    height: 350px;
+    padding: 20px;
 
-    background: #263c25;
-    border: 3px solid #777;
+    background: #1b1b1b;
 
-    margin-top: 20px;
-}
+    border: 1px solid #666;
 
-#player {
-    position: absolute;
+    flex-shrink: 0;
 
-    left: 50%;
-    top: 50%;
+    min-width: 0;
 
-    transform: translate(-50%, -50%);
-
-    font-size: 28px;
-    font-weight: bold;
-
-    color: yellow;
+    overflow: visible;
 }
 
 
-/* MENU */
+#dev-tools h2 {
+    margin-top: 0;
+
+    margin-bottom: 20px;
+}
+
+
+.dev-section {
+    padding-bottom: 15px;
+
+    margin-bottom: 15px;
+
+    border-bottom: 1px solid #444;
+}
+
+
+.dev-section:last-child {
+    border-bottom: none;
+
+    margin-bottom: 0;
+
+    padding-bottom: 0;
+}
+
+
+.dev-section h3 {
+    margin-top: 0;
+
+    margin-bottom: 12px;
+
+    color: #bbb;
+
+    font-size: 15px;
+}
+
+
+/* ==========================================
+   DEV ROWS
+   ========================================== */
+
+.dev-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 8px;
+
+    min-width: 0;
+}
+
+
+.dev-row label {
+    flex: 0 0 85px;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.dev-number-row {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        32px
+        55px
+        32px;
+
+    gap: 5px;
+}
+
+
+.dev-number-row span {
+    min-width: 0;
+
+    text-align: center;
+
+    font-family: monospace;
+
+    font-size: 14px;
+}
+
+
+.dev-number-row button {
+    width: 32px;
+
+    height: 28px;
+
+    margin: 0;
+
+    padding: 0;
+
+    font-size: 18px;
+
+    line-height: 1;
+}
+
+
+.dev-row input,
+.dev-row select {
+    width: 0;
+
+    min-width: 0;
+
+    flex: 1 1 0;
+
+    box-sizing: border-box;
+
+    background: #111;
+
+    color: white;
+
+    border: 1px solid #555;
+
+    padding: 6px;
+
+    font-family: Arial, sans-serif;
+}
+
+
+.dev-row select {
+    cursor: pointer;
+}
+
+
+.dev-row select option {
+    width: 100%;
+
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    background: #111;
+
+    color: white;
+
+    border: 1px solid #555;
+
+    padding: 6px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    border-radius: 0;
+}
+
+
+.dev-row > .ui-dropdown {
+    flex: 1 1 0;
+
+    width: 0;
+
+    min-width: 0;
+}
+
+
+/* ==========================================
+   DEV INVENTORY
+   ========================================== */
+
+.dev-inventory-controls {
+    display: flex;
+
+    align-items: stretch;
+
+    gap: 6px;
+
+    width: 100%;
+
+    min-width: 0;
+
+    margin-bottom: 10px;
+}
+
+
+.dev-inventory-controls .ui-dropdown {
+    flex: 1 1 0;
+
+    width: 0;
+
+    min-width: 0;
+}
+
+
+.dev-inventory-controls .ui-dropdown-button {
+    width: 100%;
+
+    min-width: 0;
+}
+
+
+.dev-inventory-controls > button {
+    flex: 0 0 60px;
+
+    width: 60px;
+
+    margin: 0;
+
+    padding: 6px;
+}
+
+
+#dev-inventory-list {
+    width: 100%;
+
+    min-width: 0;
+
+    max-width: 100%;
+
+    max-height: 120px;
+
+    overflow-x: hidden;
+
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    font-size: 14px;
+}
+
+
+.dev-inventory-item {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 8px;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding: 4px 0;
+
+    border-bottom: 1px solid #333;
+}
+
+
+.dev-inventory-item > span {
+    flex: 1 1 auto;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.dev-inventory-item button {
+    flex: 0 0 28px;
+
+    width: 28px;
+
+    height: 24px;
+
+    margin: 0;
+
+    padding: 0;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   DEV RESET
+   ========================================== */
+
+.dev-reset-button {
+    width: 100%;
+
+    margin: 0;
+
+    background: #442222;
+
+    border-color: #774444;
+}
+
+
+.dev-reset-button:hover {
+    background: #663333;
+}
+
+
+/* ==========================================
+   COLLISION EDITOR
+   ========================================== */
+
+.dev-collision-editor {
+    margin-top: 0;
+}
+
+
+.dev-collision-editor-controls {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 6px;
+
+    margin-bottom: 8px;
+}
+
+
+.dev-collision-editor-controls button {
+    width: 100%;
+
+    margin: 0;
+
+    padding: 7px 5px;
+
+    font-size: 12px;
+}
+
+
+.dev-collision-editor-controls .active {
+    background: #555;
+
+    border-color: #ffd700;
+}
+
+
+.dev-collision-info {
+    margin-bottom: 8px;
+
+    color: #aaa;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+}
+
+
+.dev-collision-selection {
+    min-height: 18px;
+
+    margin-bottom: 8px;
+
+    color: #ffd700;
+
+    font-family: monospace;
+
+    font-size: 12px;
+}
+
+
+.dev-collision-list {
+    width: 100%;
+
+    max-height: 120px;
+
+    overflow-x: hidden;
+
+    overflow-y: auto;
+
+    border: 1px solid #333;
+
+    background: #111;
+}
+
+
+.dev-collision-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    width: 100%;
+
+    padding: 4px;
+
+    border-bottom: 1px solid #333;
+
+    cursor: pointer;
+
+    font-family: monospace;
+
+    font-size: 11px;
+}
+
+
+.dev-collision-item:last-child {
+    border-bottom: none;
+}
+
+
+.dev-collision-item:hover {
+    background: #242424;
+}
+
+
+.dev-collision-item.selected {
+    background: #3a3218;
+}
+
+
+.dev-collision-item span {
+    flex: 1 1 auto;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.dev-collision-item button {
+    flex: 0 0 22px;
+
+    width: 22px;
+
+    height: 20px;
+
+    margin: 0;
+
+    padding: 0;
+
+    font-size: 12px;
+}
+
+
+.dev-collision-empty {
+    padding: 8px;
+
+    color: #666;
+
+    font-size: 12px;
+
+    text-align: center;
+}
+
+
+/* ==========================================
+   GAME MENU
+   ========================================== */
 
 .modal {
     position: fixed;
@@ -125,9 +890,12 @@ main {
     background: rgba(0, 0, 0, 0.7);
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 }
+
 
 .menu-box {
     width: 350px;
@@ -135,7 +903,432 @@ main {
     padding: 30px;
 
     background: #222;
+
     border: 2px solid #777;
 
     text-align: center;
+}
+
+
+/* ==========================================
+   UI SYSTEM
+   ========================================== */
+
+
+/* ==========================================
+   COMMON UI
+   ========================================== */
+
+.ui-button {
+    display: inline-block;
+
+    width: auto;
+
+    margin: 0;
+
+    padding: 8px 12px;
+
+    background: #333;
+
+    color: white;
+
+    border: 1px solid #777;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+
+.ui-button:hover {
+    background: #555;
+}
+
+
+.ui-button:disabled {
+    opacity: 0.5;
+
+    cursor: default;
+}
+
+
+/* ==========================================
+   DROPDOWN
+   ========================================== */
+
+.ui-dropdown {
+    position: relative;
+
+    width: 100%;
+
+    min-width: 0;
+}
+
+
+.ui-dropdown-button {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    width: 100%;
+
+    min-width: 0;
+
+    height: 32px;
+
+    margin: 0;
+
+    padding: 6px 8px;
+
+    background: #111;
+
+    color: white;
+
+    border: 1px solid #555;
+
+    border-radius: 0;
+
+    cursor: pointer;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    text-align: left;
+}
+
+
+.ui-dropdown-button:hover {
+    background: #181818;
+
+    border-color: #777;
+}
+
+
+.ui-dropdown.open .ui-dropdown-button {
+    border-color: #999;
+}
+
+
+.ui-dropdown-label {
+    flex: 1 1 auto;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.ui-dropdown-arrow {
+    margin-left: 8px;
+
+    color: #aaa;
+
+    font-size: 12px;
+
+    flex-shrink: 0;
+}
+
+
+/* ==========================================
+   DROPDOWN MENU
+   ========================================== */
+
+.ui-dropdown-menu {
+    position: absolute;
+
+    z-index: 1000;
+
+    left: 0;
+
+    top: calc(100% + 2px);
+
+    width: 100%;
+
+    min-width: 100%;
+
+    max-width: calc(100vw - 20px);
+
+    max-height: min(
+        220px,
+        calc(100vh - 20px)
+    );
+
+    overflow-x: hidden;
+
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    background: #111;
+
+    border: 1px solid #777;
+
+    border-radius: 0;
+
+    box-shadow:
+        0 4px 10px
+        rgba(0, 0, 0, 0.5);
+
+    display: none;
+}
+
+
+.ui-dropdown.open .ui-dropdown-menu {
+    display: block;
+}
+
+
+.ui-dropdown.open-up .ui-dropdown-menu {
+    top: auto;
+
+    bottom: calc(100% + 2px);
+}
+
+
+.ui-dropdown.align-right .ui-dropdown-menu {
+    left: auto;
+
+    right: 0;
+}
+
+
+.ui-dropdown-option {
+    display: block;
+
+    box-sizing: border-box;
+
+    width: 100%;
+
+    min-width: 100%;
+
+    max-width: 100%;
+
+    margin: 0;
+
+    padding: 8px 10px;
+
+    background: #111;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 0;
+
+    cursor: pointer;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    text-align: left;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.ui-dropdown-option:hover,
+.ui-dropdown-option.highlighted {
+    background: #333;
+}
+
+
+.ui-dropdown-option.selected {
+    background: #242424;
+}
+
+
+.ui-dropdown-option.selected:hover,
+.ui-dropdown-option.selected.highlighted {
+    background: #444;
+}
+
+
+.ui-dropdown-option:disabled {
+    color: #666;
+
+    cursor: default;
+}
+
+
+.ui-dropdown-empty {
+    padding: 8px;
+
+    color: #777;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* ==========================================
+   PANEL
+   ========================================== */
+
+.ui-panel {
+    padding: 20px;
+
+    background: #222;
+
+    border: 1px solid #444;
+}
+
+
+.ui-panel-title {
+    margin-top: 0;
+}
+
+
+/* ==========================================
+   MODAL
+   ========================================== */
+
+.ui-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(0, 0, 0, 0.7);
+}
+
+
+.ui-modal-box {
+    width: 350px;
+
+    max-width: calc(100vw - 40px);
+
+    padding: 30px;
+
+    background: #222;
+
+    border: 2px solid #777;
+
+    border-radius: 0;
+
+    text-align: center;
+}
+
+
+.ui-modal-title {
+    margin-top: 0;
+}
+
+
+/* ==========================================
+   NUMBER CONTROL
+   ========================================== */
+
+.ui-number-control {
+    display: inline-grid;
+
+    grid-template-columns:
+        32px
+        55px
+        32px;
+
+    gap: 5px;
+
+    align-items: center;
+}
+
+
+.ui-number-button {
+    width: 32px;
+
+    height: 28px;
+
+    margin: 0;
+
+    padding: 0;
+
+    font-size: 18px;
+
+    line-height: 1;
+}
+
+
+.ui-number-value {
+    text-align: center;
+
+    font-family: monospace;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   TOOLTIP
+   ========================================== */
+
+.ui-tooltip {
+    position: relative;
+}
+
+
+.ui-tooltip::after {
+    content: attr(data-tooltip);
+
+    position: absolute;
+
+    z-index: 3000;
+
+    left: 50%;
+
+    bottom: calc(100% + 6px);
+
+    transform:
+        translateX(-50%);
+
+    width: max-content;
+
+    max-width: 240px;
+
+    padding: 5px 8px;
+
+    background: #111;
+
+    color: white;
+
+    border: 1px solid #666;
+
+    border-radius: 0;
+
+    font-size: 12px;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.1s ease;
+}
+
+
+.ui-tooltip:hover::after {
+    opacity: 1;
 }
