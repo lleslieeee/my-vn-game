@@ -1,0 +1,86 @@
+{
+    "maps": {
+        "village": {
+            "name": "Village",
+            "width": 2500,
+            "height": 1750,
+            "atlas": "maps/village.png",
+
+            "collision": [],
+
+            "triggers": [],
+
+            "objects": [],
+
+            "transitions": []
+        },
+
+        "dark_forest": {
+            "name": "Dark Forest",
+            "width": 5000,
+            "height": 3000,
+            "atlas": "maps/dark_forest.png",
+
+            "collision": [],
+
+            "triggers": [],
+
+            "objects": [],
+
+            "transitions": []
+        },
+
+        "old_castle": {
+            "name": "Old Castle",
+            "width": 1200,
+            "height": 900,
+            "atlas": "maps/old_castle.png",
+
+            "collision": [],
+
+            "triggers": [],
+
+            "objects": [],
+
+            "transitions": []
+        }
+    },
+
+    "items": {
+        "health_potion": {
+            "name": "Health Potion",
+            "symbol": "♥",
+            "type": "consumable"
+        },
+
+        "mana_potion": {
+            "name": "Mana Potion",
+            "symbol": "◆",
+            "type": "consumable"
+        },
+
+        "iron_sword": {
+            "name": "Iron Sword",
+            "symbol": "⚔",
+            "type": "weapon"
+        },
+
+        "wooden_shield": {
+            "name": "Wooden Shield",
+            "symbol": "◇",
+            "type": "armor"
+        },
+
+        "torch": {
+            "name": "Torch",
+            "symbol": "♨",
+            "type": "misc"
+        },
+
+        "old_key": {
+            "name": "Old Key",
+            "symbol": "⚿",
+            "type": "key"
+        }
+    }
+}
