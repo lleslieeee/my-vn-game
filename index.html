@@ -9,42 +9,102 @@
 
 <body>
 
-    <!-- TITLE SCREEN -->
+    <!-- ==========================================
+         TITLE SCREEN
+         ========================================== -->
+
     <div id="title-screen" class="screen">
+
         <h1>MY RPG</h1>
 
         <div class="title-buttons">
-            <button id="new-game-btn">New Game</button>
-            <button id="load-game-btn">Load Game</button>
+
+            <button id="new-game-btn">
+                New Game
+            </button>
+
+            <button id="load-game-btn">
+                Load Game
+            </button>
+
         </div>
 
         <p id="title-message"></p>
+
     </div>
 
 
-    <!-- GAME SCREEN -->
+    <!-- ==========================================
+         GAME SCREEN
+         ========================================== -->
+
     <div id="game-screen" class="screen hidden">
 
         <header>
+
             <h1>My RPG</h1>
 
-            <button id="menu-btn">Menu</button>
+            <button id="menu-btn">
+                Menu
+            </button>
+
         </header>
+
 
         <main>
 
+            <!-- ======================================
+                 GAME WORLD
+                 ====================================== -->
+
             <section id="game-world">
-                <h2 id="location-name">Village</h2>
+
+                <h2 id="location-name"></h2>
 
                 <div id="map">
-                    <div id="player">@</div>
+
+                    <div id="map-atlas">
+
+                        <div id="player"></div>
+
+                    </div>
+
                 </div>
 
-                <p>Use the arrow keys to move.</p>
+                <p>
+                    Move with WASD or the arrow keys.
+                </p>
+
             </section>
 
 
+            <!-- ======================================
+                 INVENTORY
+                 ====================================== -->
+
+            <section id="inventory-panel">
+
+                <div id="inventory-header">
+
+                    <h2>Inventory</h2>
+
+                    <span class="inventory-hint">
+                        E
+                    </span>
+
+                </div>
+
+                <div id="inventory-grid"></div>
+
+            </section>
+
+
+            <!-- ======================================
+                 CHARACTER STATS
+                 ====================================== -->
+
             <aside id="stats">
+
                 <h2>Character</h2>
 
                 <p>
@@ -59,13 +119,15 @@
 
                 <p>
                     <strong>HP:</strong>
-                    <span id="player-hp"></span> /
+                    <span id="player-hp"></span>
+                    /
                     <span id="player-max-hp"></span>
                 </p>
 
                 <p>
                     <strong>MP:</strong>
-                    <span id="player-mp"></span> /
+                    <span id="player-mp"></span>
+                    /
                     <span id="player-max-mp"></span>
                 </p>
 
@@ -73,22 +135,430 @@
                     <strong>Gold:</strong>
                     <span id="player-gold"></span>
                 </p>
+
+            </aside>
+
+
+            <!-- ======================================
+                 DEV TOOLBOX
+                 ====================================== -->
+
+            <aside id="dev-tools">
+
+                <h2>Dev Toolbox</h2>
+
+
+                <!-- PLAYER -->
+
+                <div class="dev-section">
+
+                    <h3>Player</h3>
+
+
+                    <div class="dev-row">
+
+                        <label for="dev-name">
+                            Name
+                        </label>
+
+                        <input
+                            id="dev-name"
+                            type="text"
+                        >
+
+                    </div>
+
+
+                    <div class="dev-row dev-number-row">
+
+                        <label>
+                            Level
+                        </label>
+
+                        <button
+                            type="button"
+                            data-dev-action="subtract"
+                            data-dev-target="level"
+                        >
+                            −
+                        </button>
+
+                        <span id="dev-level">
+                            1
+                        </span>
+
+                        <button
+                            type="button"
+                            data-dev-action="add"
+                            data-dev-target="level"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <div class="dev-row dev-number-row">
+
+                        <label>
+                            XP
+                        </label>
+
+                        <button
+                            type="button"
+                            data-dev-action="subtract"
+                            data-dev-target="xp"
+                        >
+                            −
+                        </button>
+
+                        <span id="dev-xp">
+                            0
+                        </span>
+
+                        <button
+                            type="button"
+                            data-dev-action="add"
+                            data-dev-target="xp"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <div class="dev-row dev-number-row">
+
+                        <label>
+                            HP
+                        </label>
+
+                        <button
+                            type="button"
+                            data-dev-action="subtract"
+                            data-dev-target="hp"
+                        >
+                            −
+                        </button>
+
+                        <span id="dev-hp">
+                            100
+                        </span>
+
+                        <button
+                            type="button"
+                            data-dev-action="add"
+                            data-dev-target="hp"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <div class="dev-row dev-number-row">
+
+                        <label>
+                            Max HP
+                        </label>
+
+                        <button
+                            type="button"
+                            data-dev-action="subtract"
+                            data-dev-target="maxHp"
+                        >
+                            −
+                        </button>
+
+                        <span id="dev-max-hp">
+                            100
+                        </span>
+
+                        <button
+                            type="button"
+                            data-dev-action="add"
+                            data-dev-target="maxHp"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <div class="dev-row dev-number-row">
+
+                        <label>
+                            MP
+                        </label>
+
+                        <button
+                            type="button"
+                            data-dev-action="subtract"
+                            data-dev-target="mp"
+                        >
+                            −
+                        </button>
+
+                        <span id="dev-mp">
+                            20
+                        </span>
+
+                        <button
+                            type="button"
+                            data-dev-action="add"
+                            data-dev-target="mp"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <div class="dev-row dev-number-row">
+
+                        <label>
+                            Max MP
+                        </label>
+
+                        <button
+                            type="button"
+                            data-dev-action="subtract"
+                            data-dev-target="maxMp"
+                        >
+                            −
+                        </button>
+
+                        <span id="dev-max-mp">
+                            20
+                        </span>
+
+                        <button
+                            type="button"
+                            data-dev-action="add"
+                            data-dev-target="maxMp"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <div class="dev-row dev-number-row">
+
+                        <label>
+                            Gold
+                        </label>
+
+                        <button
+                            type="button"
+                            data-dev-action="subtract"
+                            data-dev-target="gold"
+                        >
+                            −
+                        </button>
+
+                        <span id="dev-gold">
+                            50
+                        </span>
+
+                        <button
+                            type="button"
+                            data-dev-action="add"
+                            data-dev-target="gold"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- POSITION -->
+
+                <div class="dev-section">
+
+                    <h3>Position</h3>
+
+
+                    <div class="dev-row dev-number-row">
+
+                        <label>
+                            X
+                        </label>
+
+                        <button
+                            type="button"
+                            data-dev-action="subtract"
+                            data-dev-target="x"
+                        >
+                            −
+                        </button>
+
+                        <span id="dev-x">
+                            250
+                        </span>
+
+                        <button
+                            type="button"
+                            data-dev-action="add"
+                            data-dev-target="x"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <div class="dev-row dev-number-row">
+
+                        <label>
+                            Y
+                        </label>
+
+                        <button
+                            type="button"
+                            data-dev-action="subtract"
+                            data-dev-target="y"
+                        >
+                            −
+                        </button>
+
+                        <span id="dev-y">
+                            175
+                        </span>
+
+                        <button
+                            type="button"
+                            data-dev-action="add"
+                            data-dev-target="y"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- WORLD -->
+
+                <div class="dev-section">
+
+                    <h3>World</h3>
+
+
+                    <div class="dev-row">
+
+                        <label for="dev-map">
+                            Map
+                        </label>
+
+                        <div id="dev-map"></div>
+
+                    </div>
+
+
+                    <div class="dev-row dev-number-row">
+
+                        <label>
+                            Play Time
+                        </label>
+
+                        <button
+                            type="button"
+                            data-dev-action="subtract"
+                            data-dev-target="playTime"
+                        >
+                            −
+                        </button>
+
+                        <span id="dev-play-time">
+                            0
+                        </span>
+
+                        <button
+                            type="button"
+                            data-dev-action="add"
+                            data-dev-target="playTime"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INVENTORY -->
+
+                <div class="dev-section">
+
+                    <h3>Inventory</h3>
+
+                    <div class="dev-inventory-controls">
+
+                        <div id="dev-inventory-item"></div>
+
+                        <button
+                            type="button"
+                            id="dev-add-item-btn"
+                        >
+                            Add
+                        </button>
+
+                    </div>
+
+
+                    <div id="dev-inventory-list">
+                        Empty
+                    </div>
+
+                </div>
+
+
+                <!-- RESET -->
+
+                <div class="dev-section">
+
+                    <button
+                        type="button"
+                        id="dev-reset-btn"
+                        class="dev-reset-button"
+                    >
+                        Reset Game State
+                    </button>
+
+                </div>
+
             </aside>
 
         </main>
+
     </div>
 
 
-    <!-- GAME MENU -->
+    <!-- ==========================================
+         GAME MENU
+         ========================================== -->
+
     <div id="game-menu" class="modal hidden">
 
         <div class="menu-box">
 
             <h2>Menu</h2>
 
-            <button id="save-btn">Save Game</button>
-            <button id="close-menu-btn">Return to Game</button>
-            <button id="title-btn">Quit to Title</button>
+            <button id="save-btn">
+                Save Game
+            </button>
+
+            <button id="close-menu-btn">
+                Return to Game
+            </button>
+
+            <button id="title-btn">
+                Quit to Title
+            </button>
 
             <p id="menu-message"></p>
 
@@ -97,6 +567,8 @@
     </div>
 
 
+    <script src="ui.js"></script>
     <script src="engine.js"></script>
+
 </body>
 </html>
